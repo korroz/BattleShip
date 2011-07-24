@@ -1,0 +1,4 @@
+﻿    <add key="player2" value="Suijin.Suigetsu,Suijin"/>
+
+Quite cool AI made by me!
+- Korroz

@@ -1,0 +1,9 @@
+A cooler AI than the standard one that comes with BattleShip!
+
+To use it just use the following directive for a player in the configuration:
+
+    <add key="player1" value="BSPlayer.MethodicalPlayer,BSPlayer"/>
+
+Beat it if you can! :D
+
+By Korroz

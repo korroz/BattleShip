@@ -126,7 +126,9 @@ namespace Suijin
     {
       _xMax = playerView.GetXMax();
       _yMax = playerView.GetYMax();
-      _rand = new Random(Environment.TickCount + 1337 + 42);
+      byte[] randomBytes = new byte[1];
+      System.Security.Cryptography.RNGCryptoServiceProvider.Create().GetNonZeroBytes(randomBytes);
+      _rand = new Random(Environment.TickCount + 1337 + 42 + randomBytes[0]);
 
       SetUpStrategy();
     }

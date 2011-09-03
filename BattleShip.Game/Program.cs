@@ -12,13 +12,14 @@ namespace BattleShip.Game
    {
       static void Main(string[] args)
       {
-         bool isInteractive = args.Any(s => s == "-i");
-         bool isMultiRound = args.Any(s => s == "-r");
-         int nrRounds = 1;
-
-         bool printTurns = bool.Parse(ConfigurationManager.AppSettings["printTurns"]);
+         bool printTurns = Boolean.Parse(ConfigurationManager.AppSettings["printTurns"] ?? "False");
          string player1 = ConfigurationManager.AppSettings["player1"];
          string player2 = ConfigurationManager.AppSettings["player2"];
+
+         bool isInteractive = args.Any(s => s == "-i");
+         bool isMultiRound = args.Any(s => s == "-r");
+         printTurns = (printTurns || args.Any(s => s == "-t")) && !args.Any(s => s == "--noturns");
+         int nrRounds = 1;
 
          if (isMultiRound)
          {

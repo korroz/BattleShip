@@ -9,9 +9,12 @@ two 3rd party player AI's against each other.
 
 Game usage
 ----------
-There is only one switch that can be used with the game so far:
--i	         Runs the game with interactive pauses after the ship setup
+Here are the command line switches that you can use:
+-i         - Runs the game with interactive pauses after the ship setup
              phase and after the game finishes. Press any key to continue.
+-r <nr>    - Runs <nr> amount of matches in a row.
+-t         - Prints every players turn. (Overrides config setting)
+--noturns  - Mutes the output of player turns. (Overrides config setting)
 
 The configuration allows you to enable/disable the print out of all
 player shots. Also it's in the configuration you specify your own 3rd

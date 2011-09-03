@@ -124,9 +124,6 @@ namespace Suijin
 
     private void InitializeAI(IPlayerView playerView)
     {
-#if DEBUG
-      Console.WindowHeight = 60;
-#endif
       _xMax = playerView.GetXMax();
       _yMax = playerView.GetYMax();
       _rand = new Random(Environment.TickCount + 1337 + 42);

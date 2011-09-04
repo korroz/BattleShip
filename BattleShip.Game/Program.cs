@@ -12,25 +12,28 @@ namespace BattleShip.Game
    {
       static void Main(string[] args)
       {
+         PlayerInfo player1 = new PlayerInfo();
+         PlayerInfo player2 = new PlayerInfo();
+
          bool printTurns = Boolean.Parse(ConfigurationManager.AppSettings["printTurns"] ?? "False");
-         string player1 = ConfigurationManager.AppSettings["player1"];
-         string player2 = ConfigurationManager.AppSettings["player2"];
+         player1.Assembly = ConfigurationManager.AppSettings["player1"];
+         player2.Assembly = ConfigurationManager.AppSettings["player2"];
 
          bool isInteractive = args.Any(s => s == "-i");
          bool isMultiRound = args.Any(s => s == "-r");
          printTurns = (printTurns || args.Any(s => s == "-t")) && !args.Any(s => s == "--noturns");
-         int nrRounds = 1;
+         int totalRounds = 1, round = 1;
 
          if (isMultiRound)
          {
-            nrRounds = Int32.Parse(args[Array.IndexOf(args, "-r") + 1]);
+            totalRounds = round = Int32.Parse(args[Array.IndexOf(args, "-r") + 1]);
             printTurns = false;
          }
 
-         while (nrRounds-- > 0)
+         while (round-- > 0)
          {
 
-            GameSimulator game = new GameSimulator(player1, player2);
+            GameSimulator game = new GameSimulator(player1.Assembly, player2.Assembly);
             TurnEvent te;
 
             game.SetUpShips();
@@ -60,10 +63,28 @@ namespace BattleShip.Game
                }
             }
 
-            Console.WriteLine("Winner is {0} after {1} turns!", game.GetWinner().Name, game.TurnCount);
+            Console.WriteLine("Winner is {0} after {1} turns!", game.GetWinningPlayer().Name, game.TurnCount);
+
+            if (game.GetWinner() == Player.One)
+               player1.Won();
+            else
+               player2.Won();
+
+            if (round == 0)
+            {
+               player1.Name = game.Player1.Name;
+               player2.Name = game.Player2.Name;
+            }
 
             InteractivePause(isInteractive);
          }
+
+         if (isMultiRound)
+            Console.WriteLine("{0}Results:{0}\tMatches: {1}{0}\tPlayer One wins: {2,-7} ({3,5:0.#%}){0}\tPlayer Two wins: {4,-7} ({5,5:0.#%})",
+               Environment.NewLine,
+               totalRounds,
+               player1.Wins, ((double)player1.Wins / totalRounds),
+               player2.Wins, ((double)player2.Wins / totalRounds));
       }
 
       static void PrintShipPlacements(IPlayer playerAI, Player player, ICollection<Placement> shipPlacements)

@@ -1,1 +1,4 @@
-﻿public enum Orientation { Horizontal, Vertical }
+﻿namespace BattleShip.Interface
+{
+	public enum Orientation { Horizontal, Vertical }
+}
